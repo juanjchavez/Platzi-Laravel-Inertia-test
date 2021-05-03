@@ -6,6 +6,8 @@ use Inertia\Inertia;
 use App\Models\Note;
 use Illuminate\Http\Request;
 
+
+
 class NoteController extends Controller
 {
     /**
@@ -27,7 +29,7 @@ class NoteController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Notes/create');
     }
 
     /**
@@ -38,7 +40,13 @@ class NoteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'excerpt'=>'required',
+            'content'=>'required'
+        ]);
+        $note=Note::create($request->all());
+
+        return redirect()->route('notes.edit', $note->id);
     }
 
     /**
@@ -60,7 +68,7 @@ class NoteController extends Controller
      */
     public function edit(Note $note)
     {
-        //
+        return Inertia::render('Notes/edit', compact('note'));
     }
 
     /**
@@ -72,7 +80,13 @@ class NoteController extends Controller
      */
     public function update(Request $request, Note $note)
     {
-        //
+        $request->validate([
+            'excerpt'=>'required',
+            'content'=>'required'
+        ]);
+        $note->update($request->all());
+
+        return redirect()->route('notes.index');
     }
 
     /**
@@ -83,6 +97,7 @@ class NoteController extends Controller
      */
     public function destroy(Note $note)
     {
-        //
+        $note->delete();
+        return redirect()->route('notes.index');
     }
 }
