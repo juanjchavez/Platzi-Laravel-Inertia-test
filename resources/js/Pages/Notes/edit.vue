@@ -21,7 +21,7 @@
                                 <textarea 
                                     class="form-input w-full rounded-md shadow-sm"
                                     v-model="form.excerpt" ></textarea>
-                                <span class="text-red-600 text-sm" v-if="!!errors">Hello</span>
+                                <span class="text-red-600 text-sm" v-if="$page.props.errors.excerpt"> {{ $page.props.errors.excerpt }} </span>
 
                                 <label class="block font-medium text-sm text-gray-700"> Contenido </label>
                                 <textarea 
@@ -54,8 +54,7 @@ import Label from '../../Jetstream/Label.vue'
       
                 Label  },
         props: {
-            note: Object,
-            errors:Object
+            note: Object
         },
         data (){
             return{

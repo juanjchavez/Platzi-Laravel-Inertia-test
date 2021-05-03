@@ -16,7 +16,11 @@
                     </div>
                     <div class="md:col-span-2 mt-5 md:mt-0">
                         <div class="shadow bg-white md:rounded-md p-4">
-                            <inertia-link class="bg-blue-500 text-white font-bold py-2 px-4 rounded-md m-2" :href="route('notes.create')"> Nuevo </inertia-link>
+                            <div class="flex justify-between my-6">
+                                <input type="text" class="form-input rounded-md shadow-sm" placeholder="buscar..." v-model="q">
+                                <inertia-link class="bg-blue-500 text-white font-bold py-2 px-4 rounded-md m-2" :href="route('notes.create')"> Nuevo </inertia-link>
+                            </div>
+                            {{ $data }}
 
                             <table>
                                 <tr v-for="note in notes">
@@ -52,6 +56,16 @@
         },
         props: {
             notes: Array,
+        },
+        data(){
+            return{
+                q: ''
+            }
+        },
+        watch:{
+            q: function(value){
+                this.$inertia.get(this.route('notes.index'), {q: value}, {preserveState: true});
+            }
         }
     }
 </script>
